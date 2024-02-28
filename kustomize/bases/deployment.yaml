@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rest-simulator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rest-simulator
+  template:
+    metadata:
+      labels:
+        app: rest-simulator
+    spec:
+      containers:
+        - name: rest-simulator
+          image: rest-simulator:distroless
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+          env:
+            - name: NODENAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
